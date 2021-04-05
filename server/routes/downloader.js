@@ -63,9 +63,9 @@ router.get("/tiktok", async (req, res) => {
   }
   let result = await tiktok_download(req.query.link)
   if (!result) {
-    return res.status(400).json({
+    return res.status(500).json({
       status: res.statusCode,
-      error: "Error, dikarenakan url tidak valid atau media tersebut berasal dari akun private!",
+      error: "Error, dikarenakan server sedang maintance!",
     })
   }
 
