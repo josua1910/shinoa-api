@@ -1,4 +1,6 @@
 <div align="center">
+
+# Project ini masih dalam pengembangan !
  
 # Source Codes - Shinoa API
 <p align="center">
@@ -10,8 +12,6 @@
 <a href="https://github.com/QUERY-GANI/shinoa-api"><img title="Forks" src="https://img.shields.io/github/forks/QUERY-GANI/shinoa-api?color=red&style=flat-square"></a>
 <a href="https://github.com/QUERY-GANI/shinoa-api"><img title="Watching" src="https://img.shields.io/github/watchers/QUERY-GANI/shinoa-api?label=Watchers&color=blue&style=flat-square"></a>
 </p>
-
-# Project ini masih dalam pengembangan !
 
 ## [Lihat contoh website rest apinya](https://shinoa-rest.herokuapp.com/)
 
