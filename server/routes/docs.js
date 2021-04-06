@@ -19,5 +19,9 @@ routes.get("/fb", isLoggedIn, async (req, res) => {
   const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./dokumentasi/fb.ejs", title: "Facebook example" }, { async: true })
   return res.send(html)
 })
+routes.get("/tebakGambar", isLoggedIn, async (req, res) => {
+  const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./dokumentasi/tebak_gambar.ejs", title: "Tebak gambar example" }, { async: true })
+  return res.send(html)
+})
 
 module.exports = routes
