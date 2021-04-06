@@ -22,7 +22,6 @@ db.once("open", () => {
 
 app.use(favicon(__dirname + "/../client/public/img/shinoa.ico"))
 
-// Bodyparser middleware, extended false does not allow nested payloads
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
