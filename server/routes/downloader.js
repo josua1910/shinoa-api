@@ -20,11 +20,24 @@ router.get("/ig", async (req, res) => {
     })
   }
   let date = new Date(result.taken_at_timestamp * 1000)
+  let obj
+  if (result.is_video) {
+    obj = {
+      video_url: result.video_url,
+      is_audio: result.has_audio,
+      view_count: result.video_view_count,
+      play_count: result.video_play_count,
+    }
+  } else {
+    obj = null
+  }
   let rapihkan = {
+    uploadBy: result.owner.username,
+    full_name: result.full_name,
+    timeUpload: JSON.stringify(date).slice(1, 11),
     image: result.display_resources,
     is_video: result.is_video,
-    timeUpload: JSON.stringify(date).slice(1, 11),
-    uploadBy: result.owner.username,
+    video: obj,
     jumlah_like: result.edge_media_preview_like.count,
     caption: result.edge_media_to_caption.edges[0].node.text,
   }
