@@ -26,7 +26,7 @@ router.get("/ig", async (req, res) => {
     followers: result.edge_followed_by.count,
     following: result.edge_follow.count,
     jumlah_postingan: result.edge_owner_to_timeline_media.count,
-    external_url: result.external_url
+    external_url: result.external_url,
     profile: {
       hd: result.profile_pic_url_hd,
       no_hd: result.profile_pic_url,
