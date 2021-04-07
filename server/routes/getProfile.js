@@ -16,12 +16,17 @@ router.get("/ig", async (req, res) => {
       status: res.statusCode,
       error: "Username tersebut tidak ditemukan",
     })
+
   let user = {
     username: result.username,
     full_name: result.full_name,
     bio: result.biography,
     akun_private: result.is_private,
     akun_terverifikasi: result.is_verified,
+    followers: result.edge_followed_by.count,
+    following: result.edge_follow.count,
+    jumlah_postingan: result.edge_owner_to_timeline_media.count,
+    external_url: result.external_url
     profile: {
       hd: result.profile_pic_url_hd,
       no_hd: result.profile_pic_url,
