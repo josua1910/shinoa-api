@@ -40,23 +40,30 @@ router.get("/ig", async (req, res) => {
 })
 
 router.get("/fb", async (req, res) => {
-  let result = await fb_dl(req.query.link)
   if (!req.query.link) {
     return res.status(400).json({
       status: res.statusCode,
       error: msg("link")[400],
     })
   }
-  if (!result) {
-    return res.status(400).json({
+  if (req.query.link.match(/.*facebook\.com\/.*/g)) {
+    let result = await fb_dl(req.query.link)
+    if (!result) {
+      return res.status(400).json({
+        status: res.statusCode,
+        error: "Error, dikarenakan hanya support url video dari facebook, silahkan lihat dokumentasi untuk melihat contohnya!",
+      })
+    }
+    return res.status(200).json({
       status: res.statusCode,
-      error: "Error, dikarenakan url tidak valid atau media tersebut berasal dari akun private!",
+      data: result,
+    })
+  } else {
+    return res.statusCode(400).json({
+      status: res.statusCode,
+      error: "Link tidak valid!",
     })
   }
-  return res.status(200).json({
-    status: res.statusCode,
-    data: result,
-  })
 })
 
 router.get("/tiktok", async (req, res) => {

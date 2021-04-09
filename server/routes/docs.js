@@ -11,8 +11,12 @@ routes.get("/tiktok", isLoggedIn, async (req, res) => {
   const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./dokumentasi/tiktok.ejs", title: "Tiktok example" }, { async: true })
   return res.send(html)
 })
-routes.get("/ig", isLoggedIn, async (req, res) => {
-  const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./dokumentasi/ig.ejs", title: "Instagram example" }, { async: true })
+routes.get("/ig_dl", isLoggedIn, async (req, res) => {
+  const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./dokumentasi/ig_dl.ejs", title: "Instagram example" }, { async: true })
+  return res.send(html)
+})
+routes.get("/ig_stalk", isLoggedIn, async (req, res) => {
+  const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./dokumentasi/ig_stalk.ejs", title: "Instagram example" }, { async: true })
   return res.send(html)
 })
 routes.get("/fb", isLoggedIn, async (req, res) => {

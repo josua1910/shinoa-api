@@ -17,7 +17,38 @@ module.exports = async (link) => {
     let obj = unicodeToChar(script)
     let pre = obj.replace(/\\\//g, "/")
     let final = pre.replace(/\\/g, "")
-    return JSON.parse(final)
+
+    const {
+      groups: { H, M, S },
+    } = /T((?<H>[0-9]+)H)?((?<M>[0-9]+)M)?((?<S>[0-9]+)S)?/.exec(final.duration)
+
+    const hours = parseInt(H)
+    const minutes = parseInt(M)
+    const seconds = parseInt(S)
+    let durasi
+    if (!isNaN(seconds)) {
+      durasi = `${seconds / 60} Menit`
+      if (!isNaN(minutes)) {
+        durasi = `${seconds / 60 + minutes} Menit`
+        if (!isNaN(hours)) {
+          durasi = `${(hours * 3600 + minutes * 60 + seconds) / 60} Menit`
+        }
+      }
+    }
+
+    let kirim = {
+      author: final.author,
+      title: final.name,
+      desc: final.description,
+      thumb: final.thumbnailUrl,
+      video: final.contentUrl,
+      jumlah_comment: final.commentCount,
+      kualitas: final.videoQuality,
+      uploadAt: final.datePublished,
+      durasi,
+      size: final.contentSize,
+    }
+    return JSON.parse(kirim)
   } catch (e) {
     return false
   }
