@@ -30,16 +30,22 @@ async function starts() {
   const client = new WAConnection()
   client.on('chat-update', async (m) => {
     switch(command) {
-      case 'fb':
-        let res = await fetch(`<%= url %>/dl/fb?link=${args[0]}`)
+      case 'ig':
+        let res = await fetch(`<%= url %>/dl/ig?link=${args[0]}`)
         if (res.status !== 200) {
           throw "*Sedang ada emror!*"
         }
         let json = await res.json()
-        let { author, title, desc, thumb, videoUrl, jumlah_comment, kualitas, uploadAt, durasi, size } = json.data
-        let teks = `title: ${title}\nupload bye : ${author}\njumlah komentar : ${jumlah_comment}\nkualitas video : ${kualitas}\ntanggal upload : ${uploadAt}\nsize video : ${size}`
-        client.sendMessage(from, thumb, image, { quoted: from, caption: teks })
-        client.sendMessage(from, videoUrl, video, { quoted: from, caption: desc })
+        let { uploadBy, full_name, timeUpload, img, is_video, video_url, is_audio, view_count, play_count, jumlah_like, caption } = json.data
+        let text
+        if (is_video) {
+          text = `Uploaded by: ${full_name} *(@${uploadBy})*\nCaption:\n${caption}\nLike count : ${jumlah_like}\nView count : ${view_count}\nPlay Count : ${play_count}\nJenis video : ${
+            is_audio ? "Bersuara" : "tidak bersuara"
+          }\nDi upload pada waktu : ${timeUpload}\n`
+        } else {
+          text = `Uploaded by: ${full_name} *(@${uploadBy})*\nCaption:\n${caption}\nLike count : ${jumlah_like}\nDi upload pada waktu : ${timeUpload}\n`
+        }
+        client.sendMessage(from, is_video ? video_url : img[1].src, is_video ? video : image, { quoted: from, caption: m })
         break
     }
   })
@@ -53,7 +59,7 @@ starts()
         <span id="code_pro" class="d-none">
 async test () => {
   let fetch = require("node-fetch")
-  let res = await fetch("<%= url %>/dl/fb?link=https://www.facebook.com/alanwalkermusic/videos/277641643524720")
+  let res = await fetch("<%= url %>/dl/ig?link=https://www.instagram.com/p/CMzdZ1UBL0d/")
   let json = await res.json()
   console.log(json)
 }
@@ -77,16 +83,22 @@ async function starts() {
   const client = new WAConnection()
   client.on('chat-update', async (m) => {
     switch(command) {
-      case 'fb':
-        let res = await fetch(`<%= url %>/dl/fb?link=${args[0]}`)
+      case 'ig':
+        let res = await fetch(`<%= url %>/dl/ig?link=${args[0]}`)
         if (res.status !== 200) {
           throw "*Sedang ada emror!*"
         }
         let json = await res.json()
-        let { author, title, desc, thumb, videoUrl, jumlah_comment, kualitas, uploadAt, durasi, size } = json.data
-        let teks = `title: ${title}\nupload bye : ${author}\njumlah komentar : ${jumlah_comment}\nkualitas video : ${kualitas}\ntanggal upload : ${uploadAt}\nsize video : ${size}`
-        client.sendMessage(from, thumb, image, { quoted: from, caption: teks })
-        client.sendMessage(from, videoUrl, video, { quoted: from, caption: desc })
+        let { uploadBy, full_name, timeUpload, img, is_video, video_url, is_audio, view_count, play_count, jumlah_like, caption } = json.data
+        let text
+        if (is_video) {
+          text = `Uploaded by: ${full_name} *(@${uploadBy})*\nCaption:\n${caption}\nLike count : ${jumlah_like}\nView count : ${view_count}\nPlay Count : ${play_count}\nJenis video : ${
+            is_audio ? "Bersuara" : "tidak bersuara"
+          }\nDi upload pada waktu : ${timeUpload}\n`
+        } else {
+          text = `Uploaded by: ${full_name} *(@${uploadBy})*\nCaption:\n${caption}\nLike count : ${jumlah_like}\nDi upload pada waktu : ${timeUpload}\n`
+        }
+        client.sendMessage(from, is_video ? video_url : img[1].src, is_video ? video : image, { quoted: from, caption: m })
         break
     }
   })

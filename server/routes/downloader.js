@@ -24,7 +24,7 @@ router.get("/ig", async (req, res) => {
     uploadBy: result.owner.username,
     full_name: result.owner.full_name,
     timeUpload: JSON.stringify(date).slice(1, 11),
-    image: result.display_resources,
+    img: result.display_resources,
     is_video: result.is_video,
     video_url: result.video_url,
     is_audio: result.has_audio,

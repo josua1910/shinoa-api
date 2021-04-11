@@ -30,16 +30,18 @@ async function starts() {
   const client = new WAConnection()
   client.on('chat-update', async (m) => {
     switch(command) {
-      case 'fb':
-        let res = await fetch(`<%= url %>/dl/fb?link=${args[0]}`)
+      case 'igstalk':
+        let res = await fetch(`<%= url %>/stalk/ig?username=${args[0]}`)
         if (res.status !== 200) {
           throw "*Sedang ada emror!*"
         }
         let json = await res.json()
-        let { author, title, desc, thumb, videoUrl, jumlah_comment, kualitas, uploadAt, durasi, size } = json.data
-        let teks = `title: ${title}\nupload bye : ${author}\njumlah komentar : ${jumlah_comment}\nkualitas video : ${kualitas}\ntanggal upload : ${uploadAt}\nsize video : ${size}`
-        client.sendMessage(from, thumb, image, { quoted: from, caption: teks })
-        client.sendMessage(from, videoUrl, video, { quoted: from, caption: desc })
+        let { username, full_name, bio, akun_private, akun_terverifikasi, followers, following, jumlah_postingan, external_url, profile } = json.data
+        let pp = profile.hd || profile.no_hd
+        let caption = `\n${full_name} *(@${username})* ${akun_terverifikasi ? "✓" : ""}\nhttps://instagram.com/${username}\n${ akun_private ? "Post Hidden by User" : "*" + media_count + "* Post(s)"}\nFollowing *${following}* User(s)\n*${followers}*Followers\n*Bio:*\n${bio}${external_url ? "\n*External URL:* " + external_url : ""}
+        `.trim()
+        if (pp) client.sendMessage(m.chat, pp, image, { caption, quoted: m })
+        else client.sendMessage(m.chat, caption, extendedText, { quoted: m })
         break
     }
   })
@@ -53,7 +55,7 @@ starts()
         <span id="code_pro" class="d-none">
 async test () => {
   let fetch = require("node-fetch")
-  let res = await fetch("<%= url %>/dl/fb?link=https://www.facebook.com/alanwalkermusic/videos/277641643524720")
+  let res = await fetch("<%= url %>/stalk/ig?username=query.gani")
   let json = await res.json()
   console.log(json)
 }
@@ -77,16 +79,18 @@ async function starts() {
   const client = new WAConnection()
   client.on('chat-update', async (m) => {
     switch(command) {
-      case 'fb':
-        let res = await fetch(`<%= url %>/dl/fb?link=${args[0]}`)
+      case 'igstalk':
+        let res = await fetch(`<%= url %>/stalk/ig?username=${args[0]}`)
         if (res.status !== 200) {
           throw "*Sedang ada emror!*"
         }
         let json = await res.json()
-        let { author, title, desc, thumb, videoUrl, jumlah_comment, kualitas, uploadAt, durasi, size } = json.data
-        let teks = `title: ${title}\nupload bye : ${author}\njumlah komentar : ${jumlah_comment}\nkualitas video : ${kualitas}\ntanggal upload : ${uploadAt}\nsize video : ${size}`
-        client.sendMessage(from, thumb, image, { quoted: from, caption: teks })
-        client.sendMessage(from, videoUrl, video, { quoted: from, caption: desc })
+        let { username, full_name, bio, akun_private, akun_terverifikasi, followers, following, jumlah_postingan, external_url, profile } = json.data
+        let pp = profile.hd || profile.no_hd
+        let caption = `\n${full_name} *(@${username})* ${akun_terverifikasi ? "✓" : ""}\nhttps://instagram.com/${username}\n${ akun_private ? "Post Hidden by User" : "*" + media_count + "* Post(s)"}\nFollowing *${following}* User(s)\n*${followers}*Followers\n*Bio:*\n${bio}${external_url ? "\n*External URL:* " + external_url : ""}
+        `.trim()
+        if (pp) client.sendMessage(m.chat, pp, image, { caption, quoted: m })
+        else client.sendMessage(m.chat, caption, extendedText, { quoted: m })
         break
     }
   })

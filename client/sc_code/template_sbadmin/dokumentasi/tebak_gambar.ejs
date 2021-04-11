@@ -1,39 +1,101 @@
+<link rel="stylesheet" href="<%= url %>/views/highlight/highlightjs/dracula.css" />
+<link rel="stylesheet" href="<%= url %>/views/highlight/style.css" />
+<script src="<%= url %>/views/highlight/main.js" defer></script>
+
 <div class="container-fluid">
   <div class="body align-items-center d-flex justify-content-center">
     <div class="wadah">
-      <p class="based">Baileys</p>
+      <p class="based">
+        <label class="switch icon">
+          <input id="toggle" type="checkbox" />
+          <span class="slider round"></span>
+        </label>
+        Baileys
+      </p>
       <div class="code-wrapper">
         <pre>
-          <code id="code">let fetch = require("node-fetch")
+          <code id="code">
+const {
+    WAConnection,
+    MessageType
+} = require('@adiwajshing/baileys')
+const { text, extendedText, contact, location, liveLocation, image, video, sticker, document, audio, product } = MessageType
+let fetch = require("node-fetch")
+const type = Object.keys(m.message)[0]
+const from = m.key.remoteJid
+body = (type === 'conversation' && m.message.conversation.startsWith(prefix)) ? m.message.conversation : (type == 'imageMessage') && m.message.imageMessage.caption.startsWith(prefix) ? m.message.imageMessage.caption : (type == 'videoMessage') && m.message.videoMessage.caption.startsWith(prefix) ? m.message.videoMessage.caption : (type == 'extendedTextMessage') && m.message.extendedTextMessage.text.startsWith(prefix) ? m.message.extendedTextMessage.text : ''
+const args = body.trim().split(/ +/).slice(1)
+const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()
+async function starts() {
+  const client = new WAConnection()
+  client.on('chat-update', async (m) => {
+    switch(command) {
+      case 'tebakgambar':
+        let res = await fetch(`<%= url %>/fun/tebakgambar`)
+        if (res.status !== 200) {
+          throw "*Sedang ada emror!*"
+        }
+        let json = await res.json()
+        let { img, jawaban, petunjuk } = json.data
+        client.sendMessage(from, img, image, { quoted: from, caption: m })
+        break
+    }
+  })
+}
+starts()
 
-            let timeout = 120000
-            let poin = 1000
-            let handler = async (m, { conn, usedPrefix }) => {
-              conn.tebakgambar = conn.tebakgambar ? conn.tebakgambar : {}
-              let id = m.chat
-              if (id in conn.tebakgambar) {
-                conn.reply(m.chat, "Masih ada soal belum terjawab di chat ini", conn.tebakgambar[id][0])
-                throw false
-              }
-              let res = await fetch(global.API("shinoa", "/fun/tebakGambar", {}, ""))
-              if (res.status !== 200) throw await res.text()
-              let json = await res.json()
-              if (!json.status) throw json
-              let caption = `Timeout *${(timeout / 1000).toFixed(2)} detik*\nKetik ${usedPrefix}hint untuk hint\nBonus: ${poin} XP
-                  `.trim()
-              conn.tebakgambar[id] = [
-                await conn.sendFile(m.chat, json.data.img, "tebakgambar.jpg", caption, m),
-                json.data,
-                poin,
-                setTimeout(() => {
-                  if (conn.tebakgambar[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.data.jawaban}*`, conn.tebakgambar[id][0])
-                  delete conn.tebakgambar[id]
-                }, timeout),
-              ]
-            }</code>
-          </pre>
+// note : Silahkan sesuaikan dengan sc nya masing-masing,
+// karna kemungkinan ada perbedaan nama variabel
+            </code>
+        </pre>
+        <span id="code_pro" class="d-none">
+async test () => {
+  let fetch = require("node-fetch")
+  let res = await fetch("<%= url %>/fun/tebakgambar")
+  let json = await res.json()
+  console.log(json)
+}
+test()
+
+// versi simple
+        </span>
+        <span id="code_noob" class="d-none">
+const {
+    WAConnection,
+    MessageType
+} = require('@adiwajshing/baileys')
+const { text, extendedText, contact, location, liveLocation, image, video, sticker, document, audio, product } = MessageType
+let fetch = require("node-fetch")
+const type = Object.keys(m.message)[0]
+const from = m.key.remoteJid
+body = (type === 'conversation' && m.message.conversation.startsWith(prefix)) ? m.message.conversation : (type == 'imageMessage') && m.message.imageMessage.caption.startsWith(prefix) ? m.message.imageMessage.caption : (type == 'videoMessage') && m.message.videoMessage.caption.startsWith(prefix) ? m.message.videoMessage.caption : (type == 'extendedTextMessage') && m.message.extendedTextMessage.text.startsWith(prefix) ? m.message.extendedTextMessage.text : ''
+const args = body.trim().split(/ +/).slice(1)
+const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()
+async function starts() {
+  const client = new WAConnection()
+  client.on('chat-update', async (m) => {
+    switch(command) {
+      case 'tebakgambar':
+        let res = await fetch(`<%= url %>/fun/tebakgambar`)
+        if (res.status !== 200) {
+          throw "*Sedang ada emror!*"
+        }
+        let json = await res.json()
+        let { img, jawaban, petunjuk } = json.data
+        client.sendMessage(from, img, image, { quoted: from, caption: m })
+        break
+    }
+  })
+}
+starts()
+
+// note : Silahkan sesuaikan dengan sc nya masing-masing,
+// karna kemungkinan ada perbedaan nama variabel
+        </span>
         <button id="copy-button">Copy</button>
       </div>
     </div>
   </div>
 </div>
+
+<script src="<%= url %>/views/highlight/highlightjs/highlight.pack.js"></script>

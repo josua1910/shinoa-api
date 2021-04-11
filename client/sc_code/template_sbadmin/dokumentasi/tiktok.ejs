@@ -1,11 +1,32 @@
 <div class="container-fluid">
-  <!-- Page Heading -->
-  <h1 class="h3 mb-4 text-gray-800">Tiktok Page</h1>
-  <h3 class="h3 mb-4 text-gray-800">
-    Example use :
-    <a target="_blank" href="<%= url %>/dl/tiktok?link=https://www.tiktok.com/@tiktok/video/6807491984882765062"><%= url %>/dl/tiktok?link=https://www.tiktok.com/@tiktok/video/6807491984882765062</a>
-  </h3>
-  <h3 class="h3 mb-4 text-gray-800">URL tiktok yang tidak valid : https://www.tiktok.com/?is_copy_url=1&is_from_webapp=v2&item_id=6923380091779042562#/@dekraramu/video/6923380091779042562</h3>
-  <h3 class="h3 mb-4 text-gray-800">URL tiktok yang valid : https://www.tiktok.com/@dekraramu/video/6923380091779042562</h3>
-  <h3 class="h3 mb-4 text-gray-800">Masih belom jadi desainnya, jadi gomenasai v:</h3>
+  <div class="body align-items-center d-flex justify-content-center">
+    <div class="wadah">
+      <p class="based">
+        <label class="switch icon">
+          <input id="toggle" type="checkbox" />
+          <span class="slider round"></span>
+        </label>
+        Baileys
+      </p>
+      <div class="code-wrapper">
+        <pre>
+          <code id="code">
+// note : fitur ini sedang diperbaiki
+// silahkan kunjungi dilain waktu :)
+          </code>
+        </pre>
+        <span id="code_pro" class="d-none">
+// note : fitur ini sedang diperbaiki
+// silahkan kunjungi dilain waktu :)
+        </span>
+        <span id="code_noob" class="d-none">
+// note : fitur ini sedang diperbaiki
+// silahkan kunjungi dilain waktu :)
+        </span>
+        <button id="copy-button">Copy</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script src="<%= url %>/views/highlight/highlightjs/highlight.pack.js"></script>
