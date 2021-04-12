@@ -20,7 +20,7 @@ db.once("open", () => {
   console.log("DB is connected now!")
 })
 
-app.set('trust proxy', true)
+app.set("trust proxy", true)
 
 app.use(favicon(__dirname + "/../client/public/img/shinoa.ico"))
 
