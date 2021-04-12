@@ -19,7 +19,7 @@ const {
     WAConnection,
     MessageType
 } = require('@adiwajshing/baileys')
-const { image, video } = MessageType
+const { image } = MessageType
 let fetch = require("node-fetch")
 const type = Object.keys(m.message)[0]
 const from = m.key.remoteJid
@@ -27,28 +27,21 @@ body = (type === 'conversation' && m.message.conversation.startsWith(prefix)) ? 
 const args = body.trim().split(/ +/).slice(1)
 const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()
 async function starts() {
-  const client = new WAConnection()
-  client.on('chat-update', async (m) => {
+    const client = new WAConnection()
+    client.on('chat-update', async (m) => {
     switch(command) {
-      case 'ig':
-        let res = await fetch(`<%= url %>/dl/ig?link=${args[0]}`)
+        case 'nulis':
+        let [nama, kelas, teks] = args.join(' ').split('|')
+        let res = await fetch(`<%= url %>/tool/nulis?nama=${nama}&kelas=${kelas}&teks=${teks}`)
         if (res.status !== 200) {
-          throw "*Sedang ada emror!*"
+            throw "*Sedang ada emror!*"
         }
         let json = await res.json()
-        let { uploadBy, full_name, timeUpload, img, is_video, video_url, is_audio, view_count, play_count, jumlah_like, caption } = json.data
-        let text
-        if (is_video) {
-          text = `Uploaded by: ${full_name} *(@${uploadBy})*\nCaption:\n${caption}\nLike count : ${jumlah_like}\nView count : ${view_count}\nPlay Count : ${play_count}\nJenis video : ${
-            is_audio ? "Bersuara" : "tidak bersuara"
-          }\nDi upload pada waktu : ${timeUpload}\n`
-        } else {
-          text = `Uploaded by: ${full_name} *(@${uploadBy})*\nCaption:\n${caption}\nLike count : ${jumlah_like}\nDi upload pada waktu : ${timeUpload}\n`
-        }
-        client.sendMessage(from, is_video ? video_url : img[1].src, is_video ? video : image, { quoted: from, caption: text })
+        let { url } = json.data
+        client.sendMessage(from, url, image, { quoted: from, caption: "_hati hati ketauan_" })
         break
     }
-  })
+    })
 }
 starts()
 
@@ -59,7 +52,7 @@ starts()
         <span id="code_pro" class="d-none">
 async test () => {
   let fetch = require("node-fetch")
-  let res = await fetch("<%= url %>/dl/ig?link=https://www.instagram.com/p/CMzdZ1UBL0d/")
+  let res = await fetch("<%= url %>/tool/nulis?nama=test&kelas=9&teks=saya mau test bwang")
   let json = await res.json()
   console.log(json)
 }
@@ -72,7 +65,7 @@ const {
     WAConnection,
     MessageType
 } = require('@adiwajshing/baileys')
-const { image, video } = MessageType
+const { image } = MessageType
 let fetch = require("node-fetch")
 const type = Object.keys(m.message)[0]
 const from = m.key.remoteJid
@@ -80,28 +73,21 @@ body = (type === 'conversation' && m.message.conversation.startsWith(prefix)) ? 
 const args = body.trim().split(/ +/).slice(1)
 const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()
 async function starts() {
-  const client = new WAConnection()
-  client.on('chat-update', async (m) => {
+    const client = new WAConnection()
+    client.on('chat-update', async (m) => {
     switch(command) {
-      case 'ig':
-        let res = await fetch(`<%= url %>/dl/ig?link=${args[0]}`)
+        case 'nulis':
+        let [nama, kelas, teks] = args.join(' ').split('|')
+        let res = await fetch(`<%= url %>/tool/nulis?nama=${nama}&kelas=${kelas}&teks=${teks}`)
         if (res.status !== 200) {
-          throw "*Sedang ada emror!*"
+            throw "*Sedang ada emror!*"
         }
         let json = await res.json()
-        let { uploadBy, full_name, timeUpload, img, is_video, video_url, is_audio, view_count, play_count, jumlah_like, caption } = json.data
-        let text
-        if (is_video) {
-          text = `Uploaded by: ${full_name} *(@${uploadBy})*\nCaption:\n${caption}\nLike count : ${jumlah_like}\nView count : ${view_count}\nPlay Count : ${play_count}\nJenis video : ${
-            is_audio ? "Bersuara" : "tidak bersuara"
-          }\nDi upload pada waktu : ${timeUpload}\n`
-        } else {
-          text = `Uploaded by: ${full_name} *(@${uploadBy})*\nCaption:\n${caption}\nLike count : ${jumlah_like}\nDi upload pada waktu : ${timeUpload}\n`
-        }
-        client.sendMessage(from, is_video ? video_url : img[1].src, is_video ? video : image, { quoted: from, caption: text })
+        let { url } = json.data
+        client.sendMessage(from, url, image, { quoted: from, caption: "_hati hati ketauan_" })
         break
     }
-  })
+    })
 }
 starts()
 

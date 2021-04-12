@@ -19,8 +19,8 @@ routes.get("/", isOwner, async (req, res) => {
   }
 })
 
-routes.get("/profile", isLoggedIn, async (req, res) => {
-  const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./myProfile.ejs", title: "My profile", user: req.user }, { async: true })
+routes.get("/edit", isLoggedIn, async (req, res) => {
+  const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./editProfile.ejs", title: "Edit profile", user: req.user }, { async: true })
   return res.send(html)
 })
 
