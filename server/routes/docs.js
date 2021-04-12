@@ -4,9 +4,8 @@ const path = require("path")
 const ejs = require("ejs")
 
 routes.get("/", isLoggedIn, async (req, res) => {
-  let ip = req.headers["x-forwarded-for"]
-  console.log(ip)
-  const ipClient = req.socket.remoteAddress.match(/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/g) ? req.socket.remoteAddress.match(/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/g)[0] : 'Unknown'
+  const ipClient = req.headers["x-forwarded-for"] || "You're hacker !"
+  // const ipClient = req.socket.remoteAddress.match(/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/g) ? req.socket.remoteAddress.match(/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/g)[0] : 'Unknown'
   let system = req.headers["user-agent"].match(/\(.+\)/g)
   let browser = req.headers["user-agent"].match(/([a-z]|[A-Z])+\/[0-9]+(\.[0-9]+)?/g)
   let browserInformation = browser[browser.length - 1]
