@@ -51,12 +51,8 @@ const UserSchema = new mongoose.Schema(
       default: null,
     },
     third_party_auth: [ThirdPartyProviderSchema],
-    date: {
-      type: Date,
-      default: Date.now,
-    },
   },
-  { strict: false }
+  { strict: false, timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 )
 
 module.exports = mongoose.model("users", UserSchema)
