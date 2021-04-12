@@ -297,7 +297,7 @@
           <!-- End of Topbar -->
 
           <!-- Begin Page Content -->
-          <% if (typeof user !== "undefined") { %> <%- await include(file, { user }) %> <% } else { %> <%- await include(file, { url }) %> <% } %>
+          <%- await include(file) %>
           <!-- /.container-fluid -->
         </div>
         <!-- End of Main Content -->
