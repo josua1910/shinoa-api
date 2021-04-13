@@ -61,15 +61,51 @@
         <div class="col">
             <div class="card border-left-secondary shadow h-100 py-2">
                 <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col">
-                            <div class="text-xs font-weight-bold text-gray text-uppercase mb-4">User Information</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Email <span class="text-gray-600"><%= user.email %></span></div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Username <span class="text-gray-600"><%= user.username %></span></div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Member sejak <span class="text-gray-600"><%= memberSejak %></span></div>
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-bottom-dark shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Username</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= user.username %></div>
+                                        </div>
+                                        <div class="col-auto d-none d-md-block">
+                                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-auto d-none d-md-block">
-                            <i class="fas fa-user fa-2x text-gray-400"></i>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-bottom-dark shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Email</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= user.email %></div>
+                                        </div>
+                                        <div class="col-auto d-none d-md-block">
+                                            <i class="fas fa-envelope fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-bottom-dark shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Member sejak</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= memberSejak %></div>
+                                        </div>
+                                        <div class="col-auto d-none d-md-block">
+                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row no-gutters align-items-center mt-5">
@@ -110,6 +146,9 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Nomor Telpon</div>
                                             <a target="_blank" href="https://carabimo.com/cara-transfer-saldo-dana-ke-akun-lain-sesama-pengguna/" class="h5 mb-0 font-weight-bold text-gray-800">+62 812-8024-2081</a>
                                         </div>
+                                        <div class="col-auto d-none d-md-block">
+                                            <i class="fas fa-mobile-alt fa-2x text-gray-300"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -124,6 +163,9 @@
                                             <a target="_blank" href="https://www.pricebook.co.id/article/tips_tricks/2019/08/06/9355/cara-transfer-ovo-ke-akun-lain-dan-ke-bank" class="mb-0 font-weight-bold text-gray-800">Ovo</a>
                                             <a target="_blank" href="https://www.kompasiana.com/dewifarda/5df9a2dad541df666644b312/cara-transfer-saldo-gopay-ke-akun-lain-mudah-aman?page=all" class="mb-0 font-weight-bold text-gray-800">Gopay</a>
                                             <a target="_blank" href="https://ecaraku.com/cara-transfer-linkaja-ke-linkaja-nomor-lain/" class="mb-0 font-weight-bold text-gray-800">Linkaja</a>
+                                        </div>
+                                        <div class="col-auto d-none d-md-block">
+                                            <i class="fas fa-wallet fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
