@@ -19,8 +19,6 @@ module.exports = async (link) => {
   return axios(config)
     .then(function (response) {
       let $ = cheerio.load(response.data)
-      console.log("method get html result")
-      console.log($.html())
       const path = $("form").attr("data-hx-post")
       const payload = $("form").attr("include-vals")
       let [tt, ts] = payload.split(",")
@@ -55,8 +53,6 @@ module.exports = async (link) => {
       return axios(config)
         .then(function (response) {
           let $ = cheerio.load(response.data)
-          console.log("method post html result")
-          console.log($.html())
           return {
             caption: $("p").text(),
             mp4_dl: $("a").eq(1).attr("href"),
@@ -64,14 +60,10 @@ module.exports = async (link) => {
           }
         })
         .catch(function (error) {
-          console.log("method post error")
-          console.log(error)
           return false
         })
     })
     .catch(function (error) {
-      console.log("method get error")
-      console.log(error)
       return false
     })
 }
