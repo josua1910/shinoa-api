@@ -40,6 +40,17 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><%= agent.family %></div>
                         </div>
                         <div class="col-auto">
+                            <% if (agent.family.startsWith('Firefox')) { %>
+                                <i class="fab fa-2x text-gray-300 fa-firefox-browser"></i>
+                            <% } else if (agent.family.startsWith('Chrome')) { %>
+                                <i class="fab fa-2x text-gray-300 fa-chrome"></i>
+                            <% } else if (agent.family.startsWith('Safari')) { %>
+                                <i class="fab fa-2x text-gray-300 fa-safari"></i>
+                            <% } else if (agent.family.startsWith('Edge')) { %>
+                                <i class="fab fa-2x text-gray-300 fa-edge"></i>
+                            <% } else { %>
+                                <i class="fab fa-2x text-gray-300 fa-internet-explorer"></i>
+                            <% } %>
                         </div>
                     </div>
                 </div>
