@@ -21,8 +21,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Your system</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= sysInformation[1] %></div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Your OS</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= agent.os.family %></div>
                         </div>
                         <div class="col-auto">
                         <i class="fas fa-cogs fa-2x text-gray-300"></i>
@@ -37,20 +37,9 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Your browser</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= browser %></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= agent.family %></div>
                         </div>
                         <div class="col-auto">
-                            <% if (browser.startsWith('Firefox')) { %>
-                                <i class="fab fa-2x text-gray-300 fa-firefox-browser"></i>
-                            <% } else if (browser.startsWith('Chrome')) { %>
-                                <i class="fab fa-2x text-gray-300 fa-chrome"></i>
-                            <% } else if (browser.startsWith('Safari')) { %>
-                                <i class="fab fa-2x text-gray-300 fa-safari"></i>
-                            <% } else if (browser.startsWith('Edge')) { %>
-                                <i class="fab fa-2x text-gray-300 fa-edge"></i>
-                            <% } else { %>
-                                <i class="fab fa-2x text-gray-300 fa-internet-explorer"></i>
-                            <% } %>
                         </div>
                     </div>
                 </div>
@@ -91,6 +80,156 @@
                             </a>
                         </div>
                         <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col my-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Support me</div>
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 my-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">My dana</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">+62 812-8024-2081</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 my-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">My ovo</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">+62 812-8024-2081</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 my-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">My gopay</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">+62 812-8024-2081</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col my-4">
+            <div class="card border-bottom-dark shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">My social media</div>
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 my-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Github</div>
+                                            <a target="_blank" href="https://www.github.com/QUERY-GANI/shinoa-api" class="h6 mb-0 font-weight-bold text-gray-800">Klik link ini jika tertarik</a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fab fa-github fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 my-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Facebook</div>
+                                            <a target="_blank" href="https://www.facebook.com/gani.ahmad.35728/" class="h6 mb-0 font-weight-bold text-gray-800">Klik link ini jika tertarik</a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fab fa-facebook fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 my-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Instagram</div>
+                                            <a target="_blank" href="https://www.instagram.com/query.gani" class="h6 mb-0 font-weight-bold text-gray-800">Klik link ini jika tertarik</a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fab fa-instagram fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 my-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Youtube</div>
+                                            <a target="_blank" href="https://www.youtube.com/channel/UCg2cYvOWlj0MI1RSr91FcYw" class="h6 mb-0 font-weight-bold text-gray-800">Klik link ini jika tertarik</a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fab fa-youtube fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 my-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Whatsapp</div>
+                                            <a target="_blank" href="https://wa.me/6281280242081" class="h6 mb-0 font-weight-bold text-gray-800">Klik link ini jika tertarik</a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fab fa-whatsapp fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 my-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Telegram</div>
+                                            <a target="_blank" href="https://t.me/Ryuk0001" class="h6 mb-0 font-weight-bold text-gray-800">Klik link ini jika tertarik</a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fab fa-telegram fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
