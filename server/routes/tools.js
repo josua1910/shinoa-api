@@ -3,9 +3,6 @@ const router = express.Router()
 const { msg } = require("../config/msg")
 const nulis = require("../fitures/nulis")
 const fs = require("fs")
-const axios = require("axios")
-const FormData = require("form-data")
-const data = new FormData()
 const imgbb = require("imgbb-uploader");
 
 router.get("/nulis", async (req, res) => {
