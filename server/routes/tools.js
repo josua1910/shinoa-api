@@ -6,6 +6,7 @@ const fs = require("fs")
 const axios = require("axios")
 const FormData = require("form-data")
 const data = new FormData()
+const imgbb = require("imgbb-uploader");
 
 router.get("/nulis", async (req, res) => {
   if (!req.query.nama) {
@@ -43,6 +44,11 @@ router.get("/nulis", async (req, res) => {
   const teks = panjangContent.split("\n").slice(0, 30).join("\n")
 
   let result = nulis.proses(waktu, hari, req.query.nama, req.query.kelas, teks)
+  let options = {
+    apiKey: process.env.IMGBB_KEY,
+    imagePath: nulis.random,
+    expiration: 3600
+  }
   result
     .on("error", (e) => {
       return res.status(500).json({
@@ -51,48 +57,22 @@ router.get("/nulis", async (req, res) => {
       })
     })
     .on("exit", () => {
-      return fs.readFile(nulis.random, function (err, img) {
-        if (err) {
-          return res.status(500).json({
+      return imgbb(options)
+        .then((response) => {
+          res.status(200).json({
             status: res.statusCode,
-            error: msg()[500],
+            data: {
+              urlImg: response.url,
+              info: "url ini akan expired dalam 2 menit!",
+            },
           })
-        }
-        let encodedImage = new Buffer.from(img, "binary").toString("base64")
-        data.append("image", encodedImage)
-
-        let config = {
-          method: "post",
-          url: `https://api.imgbb.com/1/upload?expiration=120&key=${process.env.IMGBB_KEY}`,
-          headers: {
-            ...data.getHeaders(),
-          },
-          data: data,
-        }
-
-        return axios(config)
-          .then(function (response) {
-            let {
-              data: { url },
-            } = response.data
-            res.status(200).json({
-              status: res.statusCode,
-              data: {
-                url,
-                info: "url ini akan expired dalam 2 menit!",
-              },
-            })
-            fs.unlinkSync(nulis.random)
-          })
-          .catch(function (e) {
-            fs.unlinkSync(nulis.random)
-            return res.status(408).json({
-              status: res.statusCode,
-              error: msg()[408],
-            })
-          })
+          fs.unlinkSync(nulis.random)
+        })
+        .catch((error) => {
+          fs.unlinkSync(nulis.random)
+          console.error(error)
+        });
       })
-    })
 })
 
 module.exports = router
