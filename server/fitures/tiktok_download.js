@@ -1,40 +1,58 @@
-const puppeteer = require("puppeteer");
+const axios = require('axios')
+const cheerio = require('cheerio')
+const qs = require('qs')
 
-module.exports = async (URL) => {
-  try {
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
-    const page = await browser.newPage();
-    await page.goto('https://snaptik.app/');
-  
-    await page.type('#url', `${URL}`);
-    await page.click('#send', { delay: 7000 });
-
-    await page.waitForSelector('#download-block > div > a:nth-child(3)', {delay: 300});
-    let server1 = await page.$eval("#download-block > div > a:nth-child(1)", (element) => {
-        return element.getAttribute("href");
-    });
-    let server2 = await page.$eval("#download-block > div > a:nth-child(2)", (element) => {
-        return element.getAttribute("href");
-    });
-    let server3 = await page.$eval("#download-block > div > a:nth-child(3)", (element) => {
-        return element.getAttribute("href");
-    });
-    let server4 = await page.$eval("#download-block > div > a:nth-child(4)", (element) => {
-        return element.getAttribute("href");
-    });
-    let image = await page.$eval("#div_download > section > div > div > div > article > div.zhay-left.left > img", (element) => {
-        return element.getAttribute("src");
-    });
-    let textInfo = await page.$eval('#div_download > section > div > div > div > article > div.zhay-middle.center > p:nth-child(2) > span', el => el.innerText);
-    let nameInfo = await page.$eval('#div_download > section > div > div > div > article > div.zhay-middle.center > h1 > a', el => el.innerText);
-    let timeInfo = await page.$eval('#div_download > section > div > div > div > article > div.zhay-middle.center > p:nth-child(3) > b', el => el.innerText);
-    browser.close();
-    return { mp4link: {server1, server2, server3, server4}, thumb: image, caption: textInfo, uploadBy: nameInfo, uploadAt: timeInfo }
-  } catch (e) {
-    console.log(e)
-    return false
-  }
+module.exports = function TIKTOD(url) {
+     return new Promise((resolve, reject) => {
+          var BASEurl = 'https://ssstik.io'
+          axios.request({
+               url: BASEurl,
+               method: 'get',
+               headers: {
+                    'cookie': '__cfduid=deb9cec7a40793d1abe009bb9961a92d41617497572; PHPSESSID=7ivsp9hc6askg1qocpi8lfpn7n; __cflb=02DiuEcwseaiqqyPC5q2cQqNGembhyZ5QaychuqFzev83; _ga=GA1.2.131585469.1617497575; _gid=GA1.2.1629908100.1617497575; _gat_UA-3524196-6=1',
+                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36',
+                    'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"'
+               }
+          })
+          .then(({ data }) => {
+              const $ = cheerio.load(data)
+              const urlPost = $('form[data-hx-target="#target"]').attr('data-hx-post')
+              const tokenJSON = $('form[data-hx-target="#target"]').attr('include-vals')
+              const tt = tokenJSON.replace(/'/g, '').replace('tt:', '').split(',')[0]
+              const ts = tokenJSON.split('ts:')[1]
+              var config = {
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                        'cookie': '__cfduid=deb9cec7a40793d1abe009bb9961a92d41617497572; PHPSESSID=7ivsp9hc6askg1qocpi8lfpn7n; __cflb=02DiuEcwseaiqqyPC5q2cQqNGembhyZ5QaychuqFzev83; _ga=GA1.2.131585469.1617497575; _gid=GA1.2.1629908100.1617497575; _gat_UA-3524196-6=1',
+                        'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
+                        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36',
+                    },
+                    dataPost: {
+                        'id': url,
+                        'locale': 'en',
+                        'tt': tt,
+                        'ts': ts
+                    }
+              }
+              axios.post(BASEurl + urlPost, qs.stringify(config.dataPost), { headers: config.headers })
+                    .then((results) => {
+                        data = results.data
+                        const $ = cheerio.load(data)
+                        const result = {
+                              status: results.status,
+                              text: $('div > p.maintext').text(),
+                              pic: $('div > img').attr('src'),
+                              video: $('div > a.without_watermark_direct').attr('href'),
+                              music: $('div > a.music').attr('href')
+                        }
+                        if ($('div > a.without_watermark_direct').attr('href') !== undefined) {
+                              resolve(result)
+                        } else {
+                              reject({ status: false, message: 'Tautan ini telah terunduh sebelumnya' })
+                        }
+                    })
+                    .catch(reject)
+          })
+          .catch(reject)
+     })
 }
