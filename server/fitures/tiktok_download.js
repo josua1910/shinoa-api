@@ -9,8 +9,8 @@ module.exports = async (URL) => {
     const page = await browser.newPage();
     await page.goto('https://snaptik.app/');
   
-    await page.type('#url', `${URL}`);
-    await page.click('#send', { delay: 7000 });
+    // await page.type('#url', `${URL}`);
+    // await page.click('#send', { delay: 7000 });
 
     const data = await page.evaluate(() => document.querySelector('*').outerHTML);
     console.log(data);
