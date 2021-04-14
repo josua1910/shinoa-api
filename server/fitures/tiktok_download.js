@@ -34,7 +34,6 @@ module.exports = async (URL) => {
     browser.close();
     return { mp4link: {server1, server2, server3, server4}, thumb: image, caption: textInfo, uploadBy: nameInfo, uploadAt: timeInfo }
   } catch (e) {
-console.log(e)
     return false
   }
 }
