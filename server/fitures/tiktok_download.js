@@ -1,69 +1,39 @@
-const axios = require("axios")
-const qs = require("qs")
-const cheerio = require("cheerio")
+const puppeteer = require("puppeteer");
 
-module.exports = async (link) => {
-  let config = {
-    method: "get",
-    url: "https://ssstik.io/",
-    headers: {
-      "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0",
-      Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-      "Accept-Language": "en-US,en;q=0.5",
-      Connection: "keep-alive",
-      Cookie: process.env.COOKIE_TIKTOK,
-      "Upgrade-Insecure-Requests": "1",
-    },
+module.exports = async (URL) => {
+  try {
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+    const page = await browser.newPage();
+    await page.goto('https://snaptik.app/');
+  
+    await page.type('#url', `${URL}`);
+    await page.click('#send', { delay: 300 });
+  
+    await page.waitForSelector('#download-block > div > a:nth-child(3)', {delay: 300});
+    let server1 = await page.$eval("#download-block > div > a:nth-child(1)", (element) => {
+        return element.getAttribute("href");
+    });
+    let server2 = await page.$eval("#download-block > div > a:nth-child(2)", (element) => {
+        return element.getAttribute("href");
+    });
+    let server3 = await page.$eval("#download-block > div > a:nth-child(3)", (element) => {
+        return element.getAttribute("href");
+    });
+    let server4 = await page.$eval("#download-block > div > a:nth-child(4)", (element) => {
+        return element.getAttribute("href");
+    });
+    let image = await page.$eval("#div_download > section > div > div > div > article > div.zhay-left.left > img", (element) => {
+        return element.getAttribute("src");
+    });
+    let textInfo = await page.$eval('#div_download > section > div > div > div > article > div.zhay-middle.center > p:nth-child(2) > span', el => el.innerText);
+    let nameInfo = await page.$eval('#div_download > section > div > div > div > article > div.zhay-middle.center > h1 > a', el => el.innerText);
+    let timeInfo = await page.$eval('#div_download > section > div > div > div > article > div.zhay-middle.center > p:nth-child(3) > b', el => el.innerText);
+    browser.close();
+    return { mp4link: {server1, server2, server3, server4}, thumb: image, caption: textInfo, uploadBy: nameInfo, uploadAt: timeInfo }
+  } catch (e) {
+    return false
   }
-
-  return axios(config)
-    .then(function (response) {
-      let $ = cheerio.load(response.data)
-      const path = $("form").attr("data-hx-post")
-      const payload = $("form").attr("include-vals")
-      let [tt, ts] = payload.split(",")
-      let token1 = tt.slice(4, tt.length - 1).trim()
-      let token2 = ts.slice(4, ts.length).trim()
-      let data = qs.stringify({
-        id: link,
-        locale: "en",
-        tt: token1,
-        ts: token2,
-      })
-      let config = {
-        method: "post",
-        url: `https://ssstik.io${path}`,
-        headers: {
-          "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0",
-          Accept: "*/*",
-          "Accept-Language": "en-US,en;q=0.5",
-          "HX-Request": "true",
-          "HX-Target": "target",
-          "HX-Current-URL": "https://ssstik.io/",
-          "HX-Active-Element": "submit",
-          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-          Origin: "https://ssstik.io",
-          Connection: "keep-alive",
-          Cookie: process.env.COOKIE_TIKTOK,
-          TE: "Trailers",
-        },
-        data: data,
-      }
-
-      return axios(config)
-        .then(function (response) {
-          let $ = cheerio.load(response.data)
-          return {
-            caption: $("p").text(),
-            mp4_dl: $("a").eq(1).attr("href"),
-            mp3_dl: $("a").eq(2).attr("href"),
-          }
-        })
-        .catch(function (error) {
-          return false
-        })
-    })
-    .catch(function (error) {
-      return false
-    })
 }
