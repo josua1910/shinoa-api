@@ -3,6 +3,30 @@
 <script src="<%= url %>/views/highlight/main.js" defer></script>
 
 <div class="container-fluid">
+<div class="row justify-content-center">
+    <div class="col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-2">Tema yang tersedia</div>
+                        <div class="h6 mb-0 font-weight-bold text-gray-800">- neon</div>
+                        <div class="h6 mb-0 font-weight-bold text-gray-800">- coffee</div>
+                        <div class="h6 mb-0 font-weight-bold text-gray-800">- smoke</div>
+                        <div class="h6 mb-0 font-weight-bold text-gray-800">- dark-metal</div>
+                        <div class="h6 mb-0 font-weight-bold text-gray-800">- scary-gate</div>
+                        <div class="h6 mb-0 font-weight-bold text-gray-800">- wood</div>
+                        <div class="h6 mb-0 font-weight-bold text-gray-800">- silk</div>
+                        <div class="h6 mb-0 font-weight-bold text-gray-800">- flower</div>
+                    </div>
+                    <div class="col-auto d-none d-md-block">
+                        <i class="fa-2x text-gray-300 fas fa-highlighter"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
   <div class="body align-items-center d-flex justify-content-center">
     <div class="wadah">
       <p class="based">
@@ -30,15 +54,15 @@ async function starts() {
     const client = new WAConnection()
     client.on('chat-update', async (m) => {
     switch(command) {
-        case 'nulis':
-        let [nama, kelas, teks] = args.join(' ').split('|')
-        let res = await fetch(`<%= url %>/maker/nulis?nama=${nama}&kelas=${kelas}&teks=${teks}`)
+        case 'photooxy':
+        let [teks, tema] = args.join(' ').split('|')
+        let res = await fetch(`<%= url %>/maker/photooxy?teks=${nama}&tema=neon`)
         if (res.status !== 200) {
             throw "*Sedang ada emror!*"
         }
         let json = await res.json()
         let { url } = json.data
-        client.sendMessage(from, url, image, { quoted: from, caption: "_hati hati ketauan_" })
+        client.sendMessage(from, url, image, { quoted: from, caption: "Nih bwang" })
         break
     }
     })
@@ -52,7 +76,7 @@ starts()
         <span id="code_pro" class="d-none">
 async test () => {
   let fetch = require("node-fetch")
-  let res = await fetch("<%= url %>/maker/nulis?nama=test&kelas=9&teks=saya mau test bwang")
+  let res = await fetch("<%= url %>/maker/photooxy?teks=test bwang&tema=coffee")
   let json = await res.json()
   console.log(json)
 }
@@ -76,15 +100,15 @@ async function starts() {
     const client = new WAConnection()
     client.on('chat-update', async (m) => {
     switch(command) {
-        case 'nulis':
-        let [nama, kelas, teks] = args.join(' ').split('|')
-        let res = await fetch(`<%= url %>/maker/nulis?nama=${nama}&kelas=${kelas}&teks=${teks}`)
+        case 'photooxy':
+        let [teks, tema] = args.join(' ').split('|')
+        let res = await fetch(`<%= url %>/maker/photooxy?teks=${nama}&tema=neon`)
         if (res.status !== 200) {
             throw "*Sedang ada emror!*"
         }
         let json = await res.json()
         let { url } = json.data
-        client.sendMessage(from, url, image, { quoted: from, caption: "_hati hati ketauan_" })
+        client.sendMessage(from, url, image, { quoted: from, caption: "Nih bwang" })
         break
     }
     })

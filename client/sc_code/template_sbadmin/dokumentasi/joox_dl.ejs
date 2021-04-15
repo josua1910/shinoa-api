@@ -19,7 +19,7 @@ const {
     WAConnection,
     MessageType
 } = require('@adiwajshing/baileys')
-const { image } = MessageType
+const { image, audio } = MessageType
 let fetch = require("node-fetch")
 const type = Object.keys(m.message)[0]
 const from = m.key.remoteJid
@@ -30,15 +30,17 @@ async function starts() {
     const client = new WAConnection()
     client.on('chat-update', async (m) => {
     switch(command) {
-        case 'nulis':
-        let [nama, kelas, teks] = args.join(' ').split('|')
-        let res = await fetch(`<%= url %>/maker/nulis?nama=${nama}&kelas=${kelas}&teks=${teks}`)
+        case 'joox':
+        let search = args.join(' ')
+        let res = await fetch(`<%= url %>/dl/joox?q=${search}`)
         if (res.status !== 200) {
             throw "*Sedang ada emror!*"
         }
         let json = await res.json()
-        let { url } = json.data
-        client.sendMessage(from, url, image, { quoted: from, caption: "_hati hati ketauan_" })
+        let { url, thumb, song, album, title, artist, uploadAt } = json.data
+        let teks = `Title : ${title}\nAlbum : ${album}\nArtist : ${artist}\nSize : ${song.mp3_size}\nDurasi : ${song.durasi}\nUpload at : ${uploadAt}`
+        client.sendMessage(from, thumb, image, { quoted: from, caption: teks })
+        client.sendMessage(from, song.mp3, audio, { quoted: from, caption: teks })
         break
     }
     })
@@ -52,7 +54,7 @@ starts()
         <span id="code_pro" class="d-none">
 async test () => {
   let fetch = require("node-fetch")
-  let res = await fetch("<%= url %>/maker/nulis?nama=test&kelas=9&teks=saya mau test bwang")
+  let res = await fetch("<%= url %>/dl/joox?q=black catcher")
   let json = await res.json()
   console.log(json)
 }
@@ -65,7 +67,7 @@ const {
     WAConnection,
     MessageType
 } = require('@adiwajshing/baileys')
-const { image } = MessageType
+const { image, audio } = MessageType
 let fetch = require("node-fetch")
 const type = Object.keys(m.message)[0]
 const from = m.key.remoteJid
@@ -76,15 +78,17 @@ async function starts() {
     const client = new WAConnection()
     client.on('chat-update', async (m) => {
     switch(command) {
-        case 'nulis':
-        let [nama, kelas, teks] = args.join(' ').split('|')
-        let res = await fetch(`<%= url %>/maker/nulis?nama=${nama}&kelas=${kelas}&teks=${teks}`)
+        case 'joox':
+        let search = args.join(' ')
+        let res = await fetch(`<%= url %>/dl/joox?q=${search}`)
         if (res.status !== 200) {
             throw "*Sedang ada emror!*"
         }
         let json = await res.json()
-        let { url } = json.data
-        client.sendMessage(from, url, image, { quoted: from, caption: "_hati hati ketauan_" })
+        let { url, thumb, song, album, title, artist, uploadAt } = json.data
+        let teks = `Title : ${title}\nAlbum : ${album}\nArtist : ${artist}\nSize : ${song.mp3_size}\nDurasi : ${song.durasi}\nUpload at : ${uploadAt}`
+        client.sendMessage(from, thumb, image, { quoted: from, caption: teks })
+        client.sendMessage(from, song.mp3, audio, { quoted: from, caption: teks })
         break
     }
     })

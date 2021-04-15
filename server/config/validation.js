@@ -11,6 +11,15 @@ const registerValidation = (data) => {
   return schema.validate(data)
 }
 
+const editValidation = (data) => {
+  const schema = Joi.object({
+    username: Joi.string().allow(""),
+    password: Joi.string().min(6).allow("")
+  })
+  
+  return schema.validate(data)
+}
+
 const loginValidation = (data) => {
   const schema = Joi.object({
     email: Joi.string().email().required(),
@@ -32,6 +41,7 @@ function isOwner(req, res, next) {
   res.redirect("/notFound")
 }
 
+module.exports.editValidation = editValidation
 module.exports.registerValidation = registerValidation
 module.exports.loginValidation = loginValidation
 module.exports.isLoggedIn = isLoggedIn

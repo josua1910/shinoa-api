@@ -12,7 +12,7 @@ const routes = require("./routes/main")
 const cors = require("cors")
 const app = express()
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
 const db = mongoose.connection
 
 db.on("error", console.error.bind(console, "Database connection error!"))
@@ -54,4 +54,4 @@ app.use((req, res) => {
   res.render(__dirname + "/../client/sc_code/template_sbadmin/404.ejs", { url: process.env.BASE_URL })
 })
 
-app.listen(process.env.PORT, () => console.log(`server running on localhost:${process.env.PORT}`))
+app.listen(process.env.PORT, () => console.log(`server running on ${process.env.PORT}`))

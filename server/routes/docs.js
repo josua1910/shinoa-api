@@ -9,7 +9,6 @@ routes.get("/", isLoggedIn, async (req, res) => {
   let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   let memberSejak = new Date(req.user.created_at).toLocaleDateString('id', options)
   const ipClient = req.headers["x-forwarded-for"] || "You're hacker !"
-  // const ipClient = req.socket.remoteAddress.match(/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/g) ? req.socket.remoteAddress.match(/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/g)[0] : 'Unknown'
   const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./dokumentasi/index.ejs", title: "Dokumentasi", user: req.user, ip: ipClient, memberSejak, agent }, { async: true })
   return res.send(html)
 })
@@ -35,6 +34,14 @@ routes.get("/tebakgambar", isLoggedIn, async (req, res) => {
 })
 routes.get("/nulis", isLoggedIn, async (req, res) => {
   const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./dokumentasi/nulis.ejs", title: "Mager nulis example" }, { async: true })
+  return res.send(html)
+})
+routes.get("/photooxy", isLoggedIn, async (req, res) => {
+  const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./dokumentasi/photooxy.ejs", title: "Photooxy example" }, { async: true })
+  return res.send(html)
+})
+routes.get("/joox", isLoggedIn, async (req, res) => {
+  const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./dokumentasi/joox_dl.ejs", title: "Joox example" }, { async: true })
   return res.send(html)
 })
 

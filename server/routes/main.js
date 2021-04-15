@@ -4,7 +4,7 @@ const dl_routes = require("./downloader")
 const stalk_routes = require("./getProfile")
 const docs_routes = require("./docs")
 const fun_routes = require("./fun")
-const tools_routes = require("./tools")
+const tools_routes = require("./imgMaker")
 const auth = require("./user")
 const path = require("path")
 
@@ -24,6 +24,6 @@ routes.use("/user", user_routes)
 routes.use("/dl", dl_routes)
 routes.use("/stalk", stalk_routes)
 routes.use("/fun", fun_routes)
-routes.use("/tool", tools_routes)
+routes.use("/maker", tools_routes)
 
 module.exports = routes

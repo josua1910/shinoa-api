@@ -35,7 +35,7 @@
 - setelah itu baru ketik deploy
 - Tunggu beberapa saat hingga proses pendeployan nya selesai, setelah selesai anda bisa mengunjungi website anda :3
 
-# Big thanks to [ihsandev](https://www.youtube.com/watch?v=bzBSjjym814), [Fabian Bosler](https://medium.com/swlh/set-up-an-express-js-app-with-passport-js-and-mongodb-for-password-authentication-6ea05d95335c#9305), and [MRHRTZ](https://github.com/MRHRTZ) for helping me :)
+# Big thanks to [ihsandev](https://www.youtube.com/watch?v=bzBSjjym814), [Fabian Bosler](https://medium.com/swlh/set-up-an-express-js-app-with-passport-js-and-mongodb-for-password-authentication-6ea05d95335c#9305), [ZAN Senpai v:](https://github.com/Nazzid) and [MRHRTZ](https://github.com/MRHRTZ) for helping me :)
 
 <p align='center'>
    <a href="https://wa.me/6283898698875"><img height="30" src="https://c.top4top.io/p_1837yybbf0.jpeg"></a>&nbsp;&nbsp;

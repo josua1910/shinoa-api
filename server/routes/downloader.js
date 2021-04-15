@@ -3,7 +3,8 @@ const router = express.Router()
 const { msg } = require("../config/msg")
 const ig_dl = require("../fitures/ig_download")
 const fb_dl = require("../fitures/fb_download")
-const tiktok_download = require("../fitures/tiktok_download")
+const tiktok_dl = require("../fitures/tiktok_download")
+const joox_dl = require("../fitures/joox_download")
 
 router.get("/ig", async (req, res) => {
   let result = await ig_dl(req.query.link)
@@ -73,11 +74,32 @@ router.get("/tiktok", async (req, res) => {
       error: msg("link")[400],
     })
   }
-  let result = await tiktok_download(req.query.link)
+  let result = await tiktok_dl(req.query.link)
   if (!result) {
     return res.status(500).json({
       status: res.statusCode,
       error: "Error, dikarenakan server sedang maintance!",
+    })
+  }
+
+  return res.status(200).json({
+    status: res.statusCode,
+    data: result,
+  })
+})
+
+router.get("/joox", async (req, res) => {
+  if (!req.query.q) {
+    return res.status(400).json({
+      status: res.statusCode,
+      error: msg("q")[400],
+    })
+  }
+  let result = await joox_dl(req.query.q)
+  if (!result) {
+    return res.status(400).json({
+      status: res.statusCode,
+      error: `Lagu dengan judul ${req.query.q} tidak ditemukan!`,
     })
   }
 

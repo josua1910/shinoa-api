@@ -1,10 +1,11 @@
 const express = require("express")
 const routes = express.Router()
 const User = require("../models/User")
-const { registerValidation, loginValidation, isLoggedIn, isOwner } = require("../config/validation")
+const { registerValidation, loginValidation, editValidation, isLoggedIn, isOwner } = require("../config/validation")
 const path = require("path")
 const passport = require("passport")
 const ejs = require("ejs")
+const bcrypt = require("bcryptjs")
 require("dotenv/config")
 
 routes.get("/", isOwner, async (req, res) => {
@@ -20,31 +21,56 @@ routes.get("/", isOwner, async (req, res) => {
 })
 
 routes.get("/edit", isLoggedIn, async (req, res) => {
-  const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./editProfile.ejs", title: "Edit profile", user: req.user }, { async: true })
+  const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./editProfile.ejs", title: "Edit profile", user: req.user, msg: req.flash("msg") }, { async: true })
   return res.send(html)
 })
 
-routes.put("/:id", isLoggedIn, async (req, res) => {
+routes.post("/edit", isLoggedIn, async (req, res) => {
   try {
-    const updateUser = await User.updateOne(
-      { _id: req.params.id },
+    let { error } = editValidation(req.body)
+    const { username, password } = req.body;
+    if (!username && !password) {
+      req.flash("msg", "Nothing to update!")
+      return res.redirect("/user/edit")
+    }
+    if (error) {
+      console.log('joi here');
+      req.flash("msg", error.details[0].message)
+      return res.redirect("/user/edit")
+    }
+    let filteredBody = {}
+    if (username) {
+      filteredBody["username"] = username
+    }
+    if (password) {
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(password, salt, (err, hash) => {
+          if (err) throw err
+          filteredBody["password"] = hash
+        })
+      })
+    }
+    await User.findOneAndUpdate(
+      { _id: req.user._id },
+      filteredBody,
       {
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
+        new: true
       }
     )
 
-    res.json(updateUser)
+    req.flash("msg", `Success edit!`)
+    return res.redirect("/user/edit")
   } catch (e) {
-    res.status(400).json({
-      status: res.statusCode,
-      message: e,
-    })
+    if (typeof e == "object") {
+      req.flash("msg", `username ${e.keyValue.username} sudah terdaftar!`)
+    } else {
+      req.flash("msg", e)
+    }
+    return res.redirect("/user/edit")
   }
 })
 
-routes.delete("/:id", isLoggedIn, async (req, res) => {
+routes.delete("/:id", isOwner, async (req, res) => {
   try {
     const deleteUser = await User.deleteOne({ _id: req.params.id })
     res.json(deleteUser)
@@ -69,7 +95,11 @@ routes.post("/register", async (req, res, next) => {
   }
   passport.authenticate("register-local", function (err, user, info) {
     if (err) {
-      req.flash("rerror", err)
+      if (typeof err == "object") {
+        req.flash("rerror", `username ${err.keyValue.username} sudah terdaftar!`)
+      } else {
+        req.flash("rerror", err)
+      }
       return res.redirect("/user/register")
     }
     req.logIn(user, function (err) {
