@@ -53,7 +53,7 @@ starts()
             </code>
         </pre>
         <span id="code_pro" class="d-none">
-async test () => {
+let test = async () => {
   let fetch = require("node-fetch")
   let res = await fetch("<%= url %>/stalk/ig?username=query.gani")
   let json = await res.json()

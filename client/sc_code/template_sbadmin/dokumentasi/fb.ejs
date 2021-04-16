@@ -51,7 +51,7 @@ starts()
             </code>
         </pre>
         <span id="code_pro" class="d-none">
-async test () => {
+let test = async () => {
   let fetch = require("node-fetch")
   let res = await fetch("<%= url %>/dl/fb?link=https://www.facebook.com/alanwalkermusic/videos/277641643524720")
   let json = await res.json()

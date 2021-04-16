@@ -57,7 +57,7 @@ starts()
             </code>
         </pre>
         <span id="code_pro" class="d-none">
-async test () => {
+let test = async () => {
   let fetch = require("node-fetch")
   let res = await fetch("<%= url %>/dl/ig?link=https://www.instagram.com/p/CMzdZ1UBL0d/")
   let json = await res.json()

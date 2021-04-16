@@ -15,17 +15,84 @@
       <div class="code-wrapper">
         <pre>
           <code id="code">
-// note : fitur ini sedang diperbaiki
-// silahkan kunjungi dilain waktu :)
+const {
+    WAConnection,
+    MessageType
+} = require('@adiwajshing/baileys')
+const { image, video } = MessageType
+let fetch = require("node-fetch")
+const type = Object.keys(m.message)[0]
+const from = m.key.remoteJid
+body = (type === 'conversation' && m.message.conversation.startsWith(prefix)) ? m.message.conversation : (type == 'imageMessage') && m.message.imageMessage.caption.startsWith(prefix) ? m.message.imageMessage.caption : (type == 'videoMessage') && m.message.videoMessage.caption.startsWith(prefix) ? m.message.videoMessage.caption : (type == 'extendedTextMessage') && m.message.extendedTextMessage.text.startsWith(prefix) ? m.message.extendedTextMessage.text : ''
+const args = body.trim().split(/ +/).slice(1)
+const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()
+async function starts() {
+  const client = new WAConnection()
+  client.on('chat-update', async (m) => {
+    switch(command) {
+      case 'ig':
+        let res = await fetch(`<%= url %>/dl/tiktok?link=${args[0]}`)
+        if (res.status !== 200) {
+          throw "*Sedang ada emror!*"
+        }
+        let json = await res.json()
+        let { mp4, thumb } = json.data
+        client.sendMessage(from, thumb, image, { quoted: from, caption: 'tunggu sebentar ya bwang' })
+        client.sendMessage(from, mp4, video, { quoted: from, caption: 'nih bwang' })
+        break
+    }
+  })
+}
+starts()
+
+// note : Silahkan sesuaikan dengan sc nya masing-masing,
+// karna kemungkinan ada perbedaan nama variabel
           </code>
         </pre>
         <span id="code_pro" class="d-none">
-// note : fitur ini sedang diperbaiki
-// silahkan kunjungi dilain waktu :)
+let test = async () => {
+  let fetch = require("node-fetch")
+  let res = await fetch("<%= url %>/dl/tiktok?link=https://www.tiktok.com/@hartatahtaalisa14/video/6947151892883590401")
+  let json = await res.json()
+  console.log(json)
+}
+test()
+
+// versi simple
         </span>
         <span id="code_noob" class="d-none">
-// note : fitur ini sedang diperbaiki
-// silahkan kunjungi dilain waktu :)
+const {
+    WAConnection,
+    MessageType
+} = require('@adiwajshing/baileys')
+const { image, video } = MessageType
+let fetch = require("node-fetch")
+const type = Object.keys(m.message)[0]
+const from = m.key.remoteJid
+body = (type === 'conversation' && m.message.conversation.startsWith(prefix)) ? m.message.conversation : (type == 'imageMessage') && m.message.imageMessage.caption.startsWith(prefix) ? m.message.imageMessage.caption : (type == 'videoMessage') && m.message.videoMessage.caption.startsWith(prefix) ? m.message.videoMessage.caption : (type == 'extendedTextMessage') && m.message.extendedTextMessage.text.startsWith(prefix) ? m.message.extendedTextMessage.text : ''
+const args = body.trim().split(/ +/).slice(1)
+const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()
+async function starts() {
+  const client = new WAConnection()
+  client.on('chat-update', async (m) => {
+    switch(command) {
+      case 'ig':
+        let res = await fetch(`<%= url %>/dl/tiktok?link=${args[0]}`)
+        if (res.status !== 200) {
+          throw "*Sedang ada emror!*"
+        }
+        let json = await res.json()
+        let { mp4, thumb } = json.data
+        client.sendMessage(from, thumb, image, { quoted: from, caption: 'tunggu sebentar ya bwang' })
+        client.sendMessage(from, mp4, video, { quoted: from, caption: 'nih bwang' })
+        break
+    }
+  })
+}
+starts()
+
+// note : Silahkan sesuaikan dengan sc nya masing-masing,
+// karna kemungkinan ada perbedaan nama variabel
         </span>
         <button id="copy-button">Copy</button>
       </div>

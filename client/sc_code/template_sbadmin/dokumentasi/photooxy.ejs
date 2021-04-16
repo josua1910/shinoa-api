@@ -74,7 +74,7 @@ starts()
             </code>
         </pre>
         <span id="code_pro" class="d-none">
-async test () => {
+let test = async () => {
   let fetch = require("node-fetch")
   let res = await fetch("<%= url %>/maker/photooxy?teks=test bwang&tema=coffee")
   let json = await res.json()
