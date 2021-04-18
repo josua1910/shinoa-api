@@ -26,7 +26,6 @@ module.exports = (kueri) => {
         let json = JSON.parse(script.html())
         let result = json.resources.data.BaseSearchResource[`appliedProductFilters="---",article=null,auto_correction_disabled=false,corpus=null,customized_rerank_type=null,filters=null,query="${kueri}",query_pin_sigs=null,redux_normalize_feed=true,rs="typed",scope="pins",source_id=null,user=null`].data.results[Math.floor(Math.random() * 10)]
         let media
-        let akhir
         if (result.videos != null && result.videos) {
             let lokasi = `${process.env.BASE_URL}/views/pin/${random}.mp4`
             let temp = path.join(__dirname + `/../../client/public/pin/${random}.mp4`)
@@ -37,30 +36,28 @@ module.exports = (kueri) => {
                     video: lokasi,
                     thumb: result.videos.video_list.V_HLSV4.thumbnail
                     }
-                    akhir = {
-                    urlPin: `https://pinterest.com/pin/${result.id}`,
-                    uploadAt: new Date(result.created_at).toLocaleDateString('id', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
-                    uploadBy: `${result.pinner.full_name} (https://pinterest.com/${result.pinner.username})`,
-                    media,
-                    info: 'media akan dihapus otomatis dalam 2 menit!',
-                    }
                     setTimeout(() => {
                         fs.unlinkSync(temp)
                     }, 120000)
-                    resolve(akhir)
+                    resolve({
+                        urlPin: `https://pinterest.com/pin/${result.id}`,
+                        uploadAt: new Date(result.created_at).toLocaleDateString('id', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+                        uploadBy: `${result.pinner.full_name} (https://pinterest.com/${result.pinner.username})`,
+                        media,
+                        info: 'media akan dihapus otomatis dalam 2 menit!'
+                    })
                 })
             })
         } else {
             media = {
                 img: result.images.orig,
             }
-            akhir = {
+            return {
                 urlPin: `https://pinterest.com/pin/${result.id}`,
                 uploadAt: new Date(result.created_at).toLocaleDateString('id', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
                 uploadBy: `${result.pinner.full_name} (https://pinterest.com/${result.pinner.username})`,
                 media
             }
-            return akhir
         }
     })
     .catch(function (error) {

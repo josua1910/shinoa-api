@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="<%= url %>/views/highlight/highlightjs/dracula.css" />
+<link rel="stylesheet" href="<%= url %>/views/highlight/style.css" />
+<script src="<%= url %>/views/highlight/main.js" defer></script>
+
+<div class="container-fluid">
+  <div class="body align-items-center d-flex justify-content-center">
+    <div class="wadah">
+      <p class="based">
+        <label class="switch icon">
+          <input id="toggle" type="checkbox" />
+          <span class="slider round"></span>
+        </label>
+        Baileys
+      </p>
+      <div class="code-wrapper">
+        <pre>
+          <code id="code">
+const {
+    WAConnection,
+    MessageType
+} = require('@adiwajshing/baileys')
+const { image, audio } = MessageType
+let fetch = require("node-fetch")
+const type = Object.keys(m.message)[0]
+const from = m.key.remoteJid
+body = (type === 'conversation' && m.message.conversation.startsWith(prefix)) ? m.message.conversation : (type == 'imageMessage') && m.message.imageMessage.caption.startsWith(prefix) ? m.message.imageMessage.caption : (type == 'videoMessage') && m.message.videoMessage.caption.startsWith(prefix) ? m.message.videoMessage.caption : (type == 'extendedTextMessage') && m.message.extendedTextMessage.text.startsWith(prefix) ? m.message.extendedTextMessage.text : ''
+const args = body.trim().split(/ +/).slice(1)
+const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()
+async function starts() {
+    const client = new WAConnection()
+    client.on('chat-update', async (m) => {
+    switch(command) {
+        case 'pin':
+        let search = args.join(' ')
+        let res = await fetch(`<%= url %>/internet/pinterest?q=${search}`)
+        if (res.status !== 200) {
+            throw "*Sedang ada emror!*"
+        }
+        let json = await res.json()
+        let { urlPin, uploadAt, uploadBy, media, info } = json.data
+        let teks
+        if (info) {
+            teks = `*[ Cotto matte ne ]*\nPinterest url : ${urlPin}\nUpload By : ${uploadBy}\Upload At : ${uploadAt}\nDuration : ${media.duration}`
+            client.sendMessage(from, media.thumb, image, { quoted: from, caption: teks })
+            client.sendMessage(from, media.video, video, { quoted: from, caption: 'Nih bwang' })
+        } else {
+            teks = `Pinterest url : ${urlPin}\nUpload By : ${uploadBy}\Upload At : ${uploadAt}\n`
+            client.sendMessage(from, media.img.url, image, { quoted: from, caption: teks })
+        }
+        break
+    }
+    })
+}
+starts()
+
+// note : Silahkan sesuaikan dengan sc nya masing-masing,
+// karna kemungkinan ada perbedaan nama variabel
+            </code>
+        </pre>
+        <span id="code_pro" class="d-none">
+let test = async () => {
+  let fetch = require("node-fetch")
+  let res = await fetch("<%= url %>/internet/pinterest?q=shinoa")
+  let json = await res.json()
+  console.log(json)
+}
+test()
+
+// versi simple
+        </span>
+        <span id="code_noob" class="d-none">
+const {
+    WAConnection,
+    MessageType
+} = require('@adiwajshing/baileys')
+const { image, audio } = MessageType
+let fetch = require("node-fetch")
+const type = Object.keys(m.message)[0]
+const from = m.key.remoteJid
+body = (type === 'conversation' && m.message.conversation.startsWith(prefix)) ? m.message.conversation : (type == 'imageMessage') && m.message.imageMessage.caption.startsWith(prefix) ? m.message.imageMessage.caption : (type == 'videoMessage') && m.message.videoMessage.caption.startsWith(prefix) ? m.message.videoMessage.caption : (type == 'extendedTextMessage') && m.message.extendedTextMessage.text.startsWith(prefix) ? m.message.extendedTextMessage.text : ''
+const args = body.trim().split(/ +/).slice(1)
+const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()
+async function starts() {
+    const client = new WAConnection()
+    client.on('chat-update', async (m) => {
+    switch(command) {
+        case 'pin':
+        let search = args.join(' ')
+        let res = await fetch(`<%= url %>/internet/pinterest?q=${search}`)
+        if (res.status !== 200) {
+            throw "*Sedang ada emror!*"
+        }
+        let json = await res.json()
+        let { urlPin, uploadAt, uploadBy, media, info } = json.data
+        let teks
+        if (info) {
+            teks = `*[ Cotto matte ne ]*\nPinterest url : ${urlPin}\nUpload By : ${uploadBy}\Upload At : ${uploadAt}\nDuration : ${media.duration}`
+            client.sendMessage(from, media.thumb, image, { quoted: from, caption: teks })
+            client.sendMessage(from, media.video, video, { quoted: from, caption: 'Nih bwang' })
+        } else {
+            teks = `Pinterest url : ${urlPin}\nUpload By : ${uploadBy}\Upload At : ${uploadAt}\n`
+            client.sendMessage(from, media.img.url, image, { quoted: from, caption: teks })
+        }
+        break
+    }
+    })
+}
+starts()
+
+// note : Silahkan sesuaikan dengan sc nya masing-masing,
+// karna kemungkinan ada perbedaan nama variabel
+        </span>
+        <button id="copy-button">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="<%= url %>/views/highlight/highlightjs/highlight.pack.js"></script>

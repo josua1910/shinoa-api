@@ -44,5 +44,9 @@ routes.get("/joox", isLoggedIn, async (req, res) => {
   const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./dokumentasi/joox_dl.ejs", title: "Joox example" }, { async: true })
   return res.send(html)
 })
+routes.get("/pinterest", isLoggedIn, async (req, res) => {
+  const html = await ejs.renderFile(path.join(__dirname + "../../../client/sc_code/template_sbadmin/layout.ejs"), { url: process.env.BASE_URL, file: "./dokumentasi/pinterest.ejs", title: "Pinterest example" }, { async: true })
+  return res.send(html)
+})
 
 module.exports = routes
