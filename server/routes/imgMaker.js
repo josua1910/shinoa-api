@@ -81,7 +81,7 @@ router.get("/nulis", async (req, res) => {
   let options = {
     apiKey: process.env.IMGBB_KEY,
     imagePath: nulis.random,
-    expiration: 3600
+    expiration: 120
   }
   result
     .on("error", (e) => {

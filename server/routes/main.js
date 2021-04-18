@@ -5,6 +5,7 @@ const stalk_routes = require("./getProfile")
 const docs_routes = require("./docs")
 const fun_routes = require("./fun")
 const tools_routes = require("./imgMaker")
+const internet_routes = require("./internet")
 const auth = require("./user")
 const path = require("path")
 
@@ -25,5 +26,6 @@ routes.use("/dl", dl_routes)
 routes.use("/stalk", stalk_routes)
 routes.use("/fun", fun_routes)
 routes.use("/maker", tools_routes)
+routes.use("/internet", internet_routes)
 
 module.exports = routes
